@@ -37,8 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #tashqi
+    'rest_framework',
+
+    #ichki
     'users',
     'avapp',
+    'gavapp'
 ]
 
 MIDDLEWARE = [

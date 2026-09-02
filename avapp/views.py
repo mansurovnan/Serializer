@@ -78,7 +78,7 @@ class Userdelete(APIView):
         return Response({
             'msg':'user updated(patch)'
             },
-                status=status.HTTP_200_OK)
+                status=status.HTTP_204_NO_CONTENT)
 
     
 
