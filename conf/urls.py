@@ -22,5 +22,6 @@ urlpatterns = [
     path("api/", include('users.urls')),
     path("av/", include('avapp.urls')),
     path("av/", include('gavapp.urls')),
+    path("vs/", include('viewsetsapp.urls')),
 
 ]
