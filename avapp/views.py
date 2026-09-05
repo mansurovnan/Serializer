@@ -7,30 +7,41 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 
 
-class Usercreate(APIView):
-    def post(request):
+class UserCreateListView(APIView):
+
+    def post(self, request):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
         return Response({
-            'msg':'Product created',
-            'product':serializer.data
-        },
-        status=status.HTTP_201_CREATED
-        )
+            'msg': 'User created',
+            'user': serializer.data
+        }, status=status.HTTP_201_CREATED)
 
-class UserList(APIView):
-    def get(self,request):
-        users = User.object.all()
-        serializer = UserSerializer(User, many=True)
+    def get(self, request):
+        search = request.query_params.get('search')
+        users = User.objects.all()
+        if search:
+            users = users.filter(username__icontains = search)
+
+        page = request.query_params.get('page')
+        page_size = 3
+
+        if page and page.isdigit():
+            page = int(page)
+            users = users[
+                page_size * (page - 1):
+                page_size * page
+            ]
+        serializer = UserSerializer(users, many=True)
 
         return Response({
-            'msg':'user list',
-            'count': User.count,
-            'products':serializer.data
-        },
-        status=status.HTTP_200_OK)
+            'msg': 'User list',
+            'count': users.count(),
+            'users': serializer.data
+        }, status=status.HTTP_200_OK)
+
 
 class Userdetail(APIView):
     def get(self, request, pk):

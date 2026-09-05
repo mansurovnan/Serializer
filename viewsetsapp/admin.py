@@ -6,4 +6,4 @@ from users.models import User
 class UserAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'email', 'age', 'phone')
     search_fields = ('name', 'email')
-    list_filter = ('age',)
+    list_filter = ('age')
